@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-exports.verifyemail=async(email,OTP)=>{
+exports.verifyemail=async(email,URL,id,OTP)=>{
   
 const transport = nodemailer.createTransport({
     host: "smtp.mailtrap.io",
@@ -14,7 +14,9 @@ const transport = nodemailer.createTransport({
         to: email,
         subject: "purchase verification",
         html: `<div>
-        <h1>${OTP}</h1>
+        
+        <p>Click <a href="${URL+"/"+id+"/"+'verify-email'+"/"+OTP}">!!!${URL}!!${id}!!!${OTP}</a> to reset your password</p>
+        
         </div>`,
       });
   

@@ -17,9 +17,9 @@ const scheme = new mongoose.Schema({
     type: Number,
   },
   verified: {
-    type:Boolean,
-    default:false,
-    required:true
+    type: Boolean,
+    default: false,
+    required: true,
   },
 });
 const userModel = mongoose.model("usermodel", scheme);

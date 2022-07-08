@@ -6,7 +6,6 @@ const cookies = require("cookie-parser");
 const cors = require("cors");
 // const bodyParser= require('body-parser')
 
-
 //App configuration
 const app = express();
 app.use(cookies());
@@ -26,6 +25,7 @@ app.use(
 );
 
 const port = process.env.PORT || 4000;
+const CLIENT = process.env.CLIENT_URL || 4000;
 app.use("/", require("./router/routes"));
 
 app.get("/", (req, res) => {

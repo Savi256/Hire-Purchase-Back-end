@@ -4,12 +4,11 @@ const userModel = require("../model/userModel");
 const nodemailer = require("nodemailer");
 const verificationModel = require("../model/verification");
 const dotenv = require("dotenv");
-
-const {email, verifyemail, emailverified } = require("../email/authemail");
+const { email, verifyemail, emailverified } = require("../email/authemail");
 const { isValidObjectId } = require("mongoose");
 dotenv.config({ path: "config.env" });
-const { randomInt } = require("crypto");
-
+const { randomInt, randomBytes } = require("crypto");
+const URL = process.env.CLIENT_URL;
 //To Post do this:
 exports.createUser = async (req, res) => {
   try {
@@ -17,7 +16,8 @@ exports.createUser = async (req, res) => {
     //   const random = Math.round(Math.random() * 9);
     //   OTP = random + OTP;
     // }
-    const OTP = randomInt(1000, 10000);
+    // const OTP = randomBytes(32).toString("hex");
+    const OTP = randomInt(10000, 99999);
 
     const existingUser = await userModel
       .findOne({ email: req.body.email })
@@ -38,7 +38,8 @@ exports.createUser = async (req, res) => {
 
       await user.save(user);
       await verification.save(verification);
-      await verifyemail(user.email, OTP);
+      await verifyemail(user.email, URL, user._id, OTP);
+
 
       const token = sign({ email: user.email }, process.env.SECRET, {
         expiresIn: 7200,
@@ -123,13 +124,15 @@ exports.deleteUser = async (req, res) => {
 
 exports.verifyEmail = async (req, res) => {
   try {
-    const { userId, otp } = req.body;
-    if (!userId || !otp.trim()) {
-      res.json("invalid reqduest");
+    const  otp = req.params.token;
+    const userId = req.params.id;
+
+    if (!userId || !otp) {
+      res.json("invalidaaa request");
       return;
     }
     if (!isValidObjectId(userId)) {
-      res.json("invalid requst");
+      res.json("invalid id");
       return;
     }
     const veryfiedUser = await userModel.findById(userId).lean();
@@ -137,7 +140,7 @@ exports.verifyEmail = async (req, res) => {
     if (!veryfiedUser) {
       return res.json({
         status: 500,
-        message: "USER N111OT FOUND",
+        message: "USER NOT FOUND",
       });
     }
     if (veryfiedUser.verified) {
@@ -148,18 +151,21 @@ exports.verifyEmail = async (req, res) => {
     }
     const verification = await verificationModel.findOne({
       owner: veryfiedUser._id,
+      // token:
+  
     });
     if (!verification) {
       return res.json({
         status: 500,
-        message: "USER NOT ",
+        message: "OTP expired",
       });
     }
     const matched = await verification.compareToken(otp);
     if (!matched) {
       return res.json({
         status: 500,
-        message: "USER NOTc FOUND",
+        message:
+          "wrong OTP alert!! ALERT!! will self destruct in T-1MINUITES...countdown...",
       });
     }
     veryfiedUser.verified = true;
@@ -169,7 +175,7 @@ exports.verifyEmail = async (req, res) => {
 
     await emailverified(veryfiedUser.email);
 
-    res.json('sucessful')
+    res.json("sucessful");
   } catch (error) {
     res.json(error.message);
     console.log(error.message);
