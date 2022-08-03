@@ -19,8 +19,8 @@ const structure1=new mongoose.Schema(
             required:true
 
         },
-        dateOfBirth:{
-            type:Date,
+        date:{
+            type:Number,
             required:true,
             
         },
@@ -47,16 +47,16 @@ const structure1=new mongoose.Schema(
         }
         ,
         guarantorDetails:{
-         guarantorName:{type:String,required:true},
-         phoneNumber:{type:Number,required:true,unique:true},
-         address:{type:String,required:true},
-         email:{type:String,required:true,unique:true}  
+         guarantorName:{type:String},
+         phoneNumber:{type:Number},
+         address:{type:String},
+         email:{type:String}  
     },
     Product:{
-        ProductName:{type:String, required:true},
-        ProductPrice:{type:String,required:true},
-        applicationTerm:{type:String,required:true},      
-        applicationType:{type:String,required:true},
+        ProductName:{type:String},
+        ProductPrice:{type:String},
+        applicationTerm:{type:String},      
+        applicationType:{type:String},
         numberOfProducts:{type:Number}
     }
 }

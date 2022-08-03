@@ -15,7 +15,7 @@ const transport = nodemailer.createTransport({
         subject: "purchase verification",
         html: `<div>
         
-        <p>Click <a href="${URL+"/"+id+"/"+'verify-email'+"/"+OTP}">!!!${URL}!!${id}!!!${OTP}</a> to reset your password</p>
+        <p>Click the link<a href="${URL+"/"+id+"/"+'verify-email'+"/"+OTP}">!!!${URL}!!${id}!!!${OTP}</a> </p>
         
         </div>`,
       });

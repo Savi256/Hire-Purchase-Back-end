@@ -7,8 +7,12 @@ const employeeController = require("../controller/employeeController");
 const userController = require("../controller/userController");
 const customProposalController = require("../controller/customProposalController");
 const existingProposalController = require("../controller/existingProposalController");
-
+const sentreviewsController = require("../controller/sentreviews");
+// console.log(userController.createUser)
 //Note: the post method takes two parameter name of the path and callbackfunc from userModel mode;
+router.post("/create-reviews/:id", sentreviewsController.sender);
+router.get("/get-reviews/:id", sentreviewsController.listreviews);
+
 router.post("/create-user", userController.createUser);
 router.get("/get-user", userController.findUser);
 router.put("/update-user", userController.updateUser);
@@ -17,7 +21,7 @@ router.delete("/delete-user", userController.deleteUser);
 router.get("/:id/verify-email/:token", userController.verifyEmail);
 
 //Routes for customPropsoal
-router.post(
+router.put(
   "/create-custom-proposal",
   customProposalController.createCustomProposal
 );

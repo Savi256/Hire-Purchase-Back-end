@@ -1,63 +1,66 @@
-const mongoose=require('mongoose')
-const structure2=new mongoose.Schema({
-    fullname:{
-        type: String,
-        required:true
-    }, 
-    email:{
-        type:String,
-        required:true,
-        unique:true
-    },
-    
-    address:{
-        type:String,
-        lowercase:true,
-        required:true
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
-    },
-    dateOfBirth:{
-        type:Date,
-        required:true,
-        unique:true
-    },
-    stateOfOrigin:{
-        type:String,
-        required:true
+const structure2 = new mongoose.Schema({
+  fullname: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  confirmEmail: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    lowercase: true,
+    required: true,
+  },
+  age: {
+    type: Number,
+    required: true,
+  },
+  stateOfOrigin: {
+    type: String,
+    required: true,
+  },
+  phoneNumber: {
+    type: Number,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  NIN: {
+    type: Number,
+    required: true,
+  },
+  gender: {
+    type: String,
+    required: true,
+  },
+  guarantorDetails: {
+    guarantorName: { type: String },
+    phoneNumber: { type: Number },
+    address: { type: String },
+    email: { type: String },
+  },
+  Product: {
+    ProductName: { type: String },
+    ProductPrice: { type: String },
+    applicationTerm: { type: String },
+    applicationType: { type: String },
+    numberOfProducts: { type: Number },
+  },
+});
 
-    },
-    BVN:{
-        type:Number,
-        required:true,
-        unique:true
-    },
-    phoneNumber:
-    {
-        type:Number,
-        required:true,
-        unique:true
-    },
-    NIN:{
-        type:Number,
-        required:true,
-        unique:true
-    },
-
-    ProductName:
-    {
-        type:String,
-    required:true},
-
-    productCategory:
-    {
-        type:String,
-        required:true
-    }
-  
 
 
-})
+const existingProposalModel = mongoose.model("proposal", structure2);
 
-const existingProposalModel=  mongoose.model('proposal not listed in the platform',structure2)
-
-module.exports=existingProposalModel
+module.exports = existingProposalModel;

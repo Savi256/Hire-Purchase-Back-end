@@ -40,7 +40,6 @@ exports.createUser = async (req, res) => {
       await verification.save(verification);
       await verifyemail(user.email, URL, user._id, OTP);
 
-
       const token = sign({ email: user.email }, process.env.SECRET, {
         expiresIn: 7200,
       });
@@ -124,7 +123,7 @@ exports.deleteUser = async (req, res) => {
 
 exports.verifyEmail = async (req, res) => {
   try {
-    const  otp = req.params.token;
+    const otp = req.params.token;
     const userId = req.params.id;
 
     if (!userId || !otp) {
@@ -152,7 +151,6 @@ exports.verifyEmail = async (req, res) => {
     const verification = await verificationModel.findOne({
       owner: veryfiedUser._id,
       // token:
-  
     });
     if (!verification) {
       return res.json({
@@ -168,7 +166,7 @@ exports.verifyEmail = async (req, res) => {
           "wrong OTP alert!! ALERT!! will self destruct in T-1MINUITES...countdown...",
       });
     }
-    veryfiedUser.verified = true;
+    await userModel.updateOne({ verified: true });
 
     await verificationModel.findByIdAndDelete(verification._id);
     // await veryfiedUser.save();
@@ -182,3 +180,4 @@ exports.verifyEmail = async (req, res) => {
     return;
   }
 };
+
