@@ -31,6 +31,7 @@ const structure2 = new mongoose.Schema({
   phoneNumber: {
     type: Number,
     required: true,
+    unique: true,
   },
   city: {
     type: String,
@@ -39,6 +40,7 @@ const structure2 = new mongoose.Schema({
   NIN: {
     type: Number,
     required: true,
+    unique: true,
   },
   gender: {
     type: String,
@@ -58,8 +60,6 @@ const structure2 = new mongoose.Schema({
     numberOfProducts: { type: Number },
   },
 });
-
-
 
 const existingProposalModel = mongoose.model("proposal", structure2);
 
