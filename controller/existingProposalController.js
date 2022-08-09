@@ -15,20 +15,19 @@ exports.createExistingProposal = async (req, res) => {
       city: req.body.city,
       NIN: req.body.NIN,
       gender: req.body.gender,
-   
     });
 
-      if (existingProposal.email === existingProposal.confirmEmail) {
+    if (existingProposal.email === existingProposal.confirmEmail) {
       await existingProposal.save();
       res.json({
         status: 200,
-        existingProposal,
+        message: existingProposal,
       });
     } else {
       res.json("invalid email.");
     }
     return;
-  } catch (error) {
+  } catch (error) { 
     res.json(error.message);
   }
 };

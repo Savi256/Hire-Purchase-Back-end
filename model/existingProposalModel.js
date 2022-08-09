@@ -21,7 +21,7 @@ const structure2 = new mongoose.Schema({
     required: true,
   },
   age: {
-    type: Number,
+    type: String,
     required: true,
   },
   stateOfOrigin: {
@@ -29,7 +29,7 @@ const structure2 = new mongoose.Schema({
     required: true,
   },
   phoneNumber: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
   },
@@ -38,7 +38,7 @@ const structure2 = new mongoose.Schema({
     required: true,
   },
   NIN: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
   },

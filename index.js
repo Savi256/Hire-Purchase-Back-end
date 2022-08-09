@@ -22,6 +22,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: "https:hire-purchase-frontend.vercel.app",
+    origin: "http://localhost:3000",
   })
 );
 
